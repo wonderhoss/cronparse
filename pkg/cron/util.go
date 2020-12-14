@@ -21,17 +21,23 @@ func fullSequence(top int, oneBased bool) []int {
 
 func sequenceBetween(bottom int, top int, rng int, oneBased bool) []int {
 	sequence := []int{}
-	if bottom > top {
-		top = top + rng
-	}
-	for i := bottom; i <= top; i++ {
-		if oneBased && i >= top {
-			sequence = append(sequence, i%(rng+1))
+	i := bottom
+	for {
+		sequence = append(sequence, i)
+		if i == top {
+			break
+		}
+		i++
+		if oneBased {
+			if i > rng {
+				i = 1
+			}
 		} else {
-			sequence = append(sequence, i%rng)
+			if i == rng {
+				i = 0
+			}
 		}
 	}
-
 	return sequence
 }
 
