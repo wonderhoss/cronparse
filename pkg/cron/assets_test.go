@@ -4,6 +4,7 @@ type TestCase struct {
 	CronString string
 	Exp        Expression
 	OutString  string
+	Err        string
 }
 
 var TestCases = []TestCase{
@@ -30,5 +31,15 @@ day of week	1 2 3 4 5
 
 command		/usr/bin/find
 `,
+		Err: "",
+	},
+}
+
+var BrokenTestCases = []TestCase{
+	TestCase{
+		CronString: "*/15 0 15-1 * 1-5 /usr/bin/find",
+		Exp:        Expression{},
+		OutString:  "",
+		Err:        "invalid sequence 15-1: 15 must be less than 1",
 	},
 }

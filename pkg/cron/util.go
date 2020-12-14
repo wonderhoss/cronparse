@@ -14,34 +14,20 @@ func intSliceEquals(a []int, b []int) bool {
 
 func fullSequence(top int, oneBased bool) []int {
 	if oneBased {
-		return sequenceBetween(1, top, top, true)
+		return sequenceBetween(1, top)
 	}
-	return sequenceBetween(0, top-1, top, false)
+	return sequenceBetween(0, top-1)
 }
 
-func sequenceBetween(bottom int, top int, rng int, oneBased bool) []int {
+func sequenceBetween(bottom int, top int) []int {
 	sequence := []int{}
-	i := bottom
-	for {
+	for i := bottom; i <= top; i++ {
 		sequence = append(sequence, i)
-		if i == top {
-			break
-		}
-		i++
-		if oneBased {
-			if i > rng {
-				i = 1
-			}
-		} else {
-			if i == rng {
-				i = 0
-			}
-		}
 	}
 	return sequence
 }
 
-func periodicSequence(bottom int, inc int, rng int, oneBased bool) []int {
+func periodicSequence(bottom int, inc int, rng int) []int {
 	sequence := []int{}
 	for i := bottom; i < rng; i = i + inc {
 		sequence = append(sequence, i)

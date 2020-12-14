@@ -2,6 +2,7 @@ package cron
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -87,6 +88,7 @@ func parseTimeToken(token string, rng int, oneBased bool) ([]int, error) {
 			}
 			nums = append(nums, num)
 		}
+		sort.Ints(nums)
 		return nums, nil
 	}
 	if token == "*" {
@@ -115,8 +117,10 @@ func rangeToSequence(token string, rng int, oneBased bool) ([]int, error) {
 	if err != nil {
 		return nil, fmt.Errorf("invalid sequence %s: %s is not a number", token, numWords[1])
 	}
-
-	return sequenceBetween(bottom, top, rng, oneBased), nil
+	if top <= bottom {
+		return nil, fmt.Errorf("invalid sequence %s: %d must be less than %d", token, bottom, top)
+	}
+	return sequenceBetween(bottom, top), nil
 }
 
 func periodicToSequence(token string, top int, oneBased bool) ([]int, error) {
@@ -147,5 +151,5 @@ func periodicToSequence(token string, top int, oneBased bool) ([]int, error) {
 	if initial >= top {
 		return nil, fmt.Errorf("invalid period %s: %d must be less than %d", token, initial, top)
 	}
-	return periodicSequence(initial, incr, top, oneBased), nil
+	return periodicSequence(initial, incr, top), nil
 }
