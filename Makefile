@@ -25,7 +25,7 @@ fmt:
 
 .PHONY: vet
 vet:
-	$(GO) vet -tags dev -composites=false ./pkg/... ./cmd/...
+	$(GO) vet -composites=false ./pkg/... ./cmd/...
 
 .PHONY: lint
 lint:
