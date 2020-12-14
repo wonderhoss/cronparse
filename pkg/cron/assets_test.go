@@ -8,7 +8,7 @@ type TestCase struct {
 }
 
 var TestCases = []TestCase{
-	TestCase{
+	{
 		CronString: "*/15 0 1,15 * 1-5 /usr/bin/find",
 		Exp: Expression{
 			Minute:     []int{0, 15, 30, 45},
@@ -36,7 +36,7 @@ command		/usr/bin/find
 }
 
 var BrokenTestCases = []TestCase{
-	TestCase{
+	{
 		CronString: "*/15 0 15-1 * 1-5 /usr/bin/find",
 		Exp:        Expression{},
 		OutString:  "",
