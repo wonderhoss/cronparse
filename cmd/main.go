@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gargath/cronparse/pkg/cron"
 	flag "github.com/spf13/pflag"
 )
 
@@ -28,6 +29,10 @@ func main() {
 	}
 
 	input := os.Args[1]
-
-	fmt.Printf("Cron Expression:\n%s\n", input)
+	expr, err := cron.Parse(input)
+	if err != nil {
+		fmt.Printf("invalid cron expression: %v\n\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Cron Expression:\n%s\n", expr.AsString())
 }
